@@ -37,7 +37,7 @@ body {
   height: min-content;
   display: flex;
   flex-direction: column-reverse;
-  color: black;
+  color:#222;
 }
 
 #date {

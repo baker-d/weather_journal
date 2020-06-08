@@ -1,5 +1,5 @@
 /* Empyt JS object to act as endpoint for all routes */
-projectData = { data: [] };
+projectData = [];
 
 // Express to run server and routes
 const express = require("express");
@@ -35,7 +35,6 @@ function listening() {
 app.get("/", sendData);
 
 function sendData(req, res) {
-  res.sendFileO(__dirname + "index.html");
   res.send(projectData);
 }
 
