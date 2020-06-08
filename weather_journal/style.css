@@ -1,111 +1,148 @@
-body{
-    background: #fffff8;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+body {
+  background: #fffff8;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  height: 100%;
 }
 
-#app{
-    display: grid;
-    grid-auto-rows: minmax(150px, auto);
-    /* grid-template-columns:  */
-    height:100vh;
-    background: #f23557;
-    color: #f0d43a;
-    justify-content: center;
-    grid-gap: 1em;
-    font-size: 20px;
-    font-family: 'Oswald', sans-serif;
+#app {
+  display: grid;
+  grid-auto-rows: minmax(150px, auto);
+  grid-template-columns: repeat(8, 1fr);
+  background: #f23557;
+  color: #f0d43a;
+  justify-content: center;
+  grid-gap: 1em;
+  font-size: 20px;
+  font-family: "Oswald", sans-serif;
+  padding: 15px;
+  border: black solid 3px;
+  grid-template-areas:
+    ". . hd hd hd hd . ."
+    "frm frm frm frm . ent ent ent";
 }
 
-.holder{
-
+.holder {
+  display: block;
 }
 
-.entry{
-    background: rgba(59, 74, 107, .4);
+.entry {
+  background: rgba(59, 74, 107, 0.4);
+  display: inline-block;
+  width: 70%;
+  grid-area: ent;
+  border-bottom: yellow solid 5px;
+}
+#entryHolder {
+  margin: 10px 0 10px 15px;
+  height: min-content;
+  display: flex;
+  flex-direction: column-reverse;
+  color: black;
 }
 
-#entryHolder{
-
+#date {
+  font-weight: normal;
 }
 
-#date{
-
+#temp {
+  font-weight: normal;
 }
 
-#temp{
-
-}
-
-#content{
-
+#content {
+  margin-bottom: 10px;
 }
 
 .headline {
-
+  text-align: center;
+  grid-area: hd;
 }
-.title{
-
+.title {
+  text-align: center;
+  font-weight: lighter;
+  border-bottom: white 1px solid;
 }
 
 /*  Basic Styling To Override Default For Basic HTML Elements */
-label{
-    display:block;
-    font-size: 27px;
+label {
+  display: block;
+  font-size: 27px;
 }
 
-input{
-    display:block;
-    height: 60px;
-    width: 320px;
-    background:#22b2da;
-    color: #f0d43a;
-    font-size: 20px;
-    font-family: 'Oswald', sans-serif;
-    border: none;
+input {
+  display: block;
+  height: 60px;
+  width: 320px;
+  background: #22b2da;
+  color: #f0d43a;
+  font-size: 20px;
+  font-family: "Oswald", sans-serif;
+  border: none;
 }
 
-button{
-    width: 400px;
-    height: 100px;
-    background: #3b4a6b;
-    color: #f0d43a;
-    font-size: 26px;
-    font-family: 'Oswald', sans-serif;
-    border: none;
-    box-shadow: 2px 4px 5px #444;
+button {
+  width: 400px;
+  height: 100px;
+  background: #3b4a6b;
+  color: #f0d43a;
+  font-size: 26px;
+  font-family: "Oswald", sans-serif;
+  border: none;
+  box-shadow: 2px 4px 5px #444;
+  margin: 20px auto 10px auto;
 }
-h1{
-    font-size: 36px;
+h1 {
+  font-size: 36px;
 }
 
-textarea{
-    background:#22b2da;
-    color: #f0d43a;
-    font-size: 20px;
-    font-family: 'Oswald', sans-serif;
+textarea {
+  background: #22b2da;
+  color: #f0d43a;
+  font-size: 20px;
+  font-family: "Oswald", sans-serif;
+  width: auto;
 }
 /* Reset style for HTML element on active to have no border*/
 input:focus,
 select:focus,
 textarea:focus,
 button:focus {
-    outline: none;
+  outline: none;
 }
 /* Style for Placeholder Text*/
-::placeholder { /* Firefox, Chrome, Opera */ 
-    color: #f0d43a; 
-    font-family: 'Oswald', sans-serif;
+::placeholder {
+  /* Firefox, Chrome, Opera */
+  color: #f0d43a;
+  font-family: "Oswald", sans-serif;
+}
 
-} 
-  
-:-ms-input-placeholder { /* Internet Explorer 10-11 */ 
-    color: #f0d43a; 
-    font-family: 'Oswald', sans-serif;
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #f0d43a;
+  font-family: "Oswald", sans-serif;
+}
 
-} 
-  
-::-ms-input-placeholder { /* Microsoft Edge */ 
-    color: #f0d43a; 
-    font-family: 'Oswald', sans-serif;
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #f0d43a;
+  font-family: "Oswald", sans-serif;
+}
 
-} 
+form {
+  border: #22b2da 2px solid;
+  height: max-content;
+  width: auto;
+  padding: 10px;
+  margin: 0 auto 20px auto;
+  grid-area: frm;
+}
+
+label,
+input {
+  flex-direction: column;
+  margin: 0;
+}
+
+#generate {
+  display: block;
+  flex-direction: column;
+}
