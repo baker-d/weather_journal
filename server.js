@@ -1,5 +1,5 @@
 /* Empyt JS object to act as endpoint for all routes */
-projectData = [];
+let projectData = {};
 
 // Express to run server and routes
 const express = require("express");
