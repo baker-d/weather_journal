@@ -1,0 +1,129 @@
+/* Global Variables */
+// openweathermap API
+const baseURL = "http://api.openweathermap.org/data/2.5/weather?";
+const countryCode = "US";
+const apiKey = "4fc2f29d77433e83eb687ec5c1e47911";
+
+// Create a new date instance dynamically with JS
+let d = new Date();
+let newDate = d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear();
+
+// Form information
+const generateButton = document.getElementById("generate");
+const zip = document.getElementById("zip");
+const textArea = document.getElementById("feelings");
+
+// UI to update dynamically
+const dataInfo = document.getElementById("date");
+const tempInfo = document.getElementById("temp");
+const contentInfo = document.getElementById("content");
+
+// Container (#entryHolder) for dynamically update information above
+
+const entryContainer = document.getElementById("entryHolder");
+
+// check to see if "zip" is 5 digits, ONLY digits.
+zip.addEventListener("change", (e) => {
+  if (e.target.value.length < 5) {
+    alert("Zip code must be 5 digits");
+  }
+  if (isNaN(e.target.value)) {
+    alert("Zip code MUST be numbers, ONLY");
+  }
+});
+
+// Update UI
+const updateUI = async () => {
+  const req = await fetch("/all");
+  try {
+    const returnedData = await req.json();
+
+    const wrapperEl = (title, elClass) => {
+      const divEl = document.createElement("div");
+      const spanEl = document.createElement("span");
+
+      // Add class w/ classList.add
+      divEl.classList.add(elClass);
+
+      // Append elements
+      entryContainer.appendChild(divEl);
+      divEl.innerHTML = title;
+      divEl.appendChild(spanEl);
+
+      return spanEl;
+    };
+
+    //Create elements & append content (data/temp/content)
+    wrapperEl("Feels like: ", "content").innerHTML = returnedData.userResponse;
+
+    wrapperEl("Temperature: ", "temperature").innerHTML =
+      returnedData.temperature;
+      
+    wrapperEl("Date: ", "data").innerHTML = returnedData.currentDate;
+
+    // Reset form
+    zip.value = "";
+    textArea.value = "";
+  } catch (error) {
+    console.log("Update UI error", error);
+  }
+};
+generateButton.addEventListener("click", (e) => {
+  const textAreaContent = textArea.value;
+  const zipCode = zip.value;
+
+  if (zipCode === "") {
+    alert("Please enter a 5 digit zip code.");
+  }
+
+  event.preventDefault();
+  entryContainer.innerHTML = "";
+
+  // GET request
+  const getForecast = async (baseURL, zipCode, countryCode, apiKey) => {
+    const urlReq = `${baseURL}zip=${zipCode},${countryCode}&units=imperial&appid=${apiKey}`;
+    const response = await fetch(urlReq);
+    try {
+      const data = await response.json();
+
+      return data;
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
+  // POST request
+  const postData = async (url = "", data = {}) => {
+    const response = await fetch(url, {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    try {
+      const newData = await response.json();
+      return newData;
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  // Chaining Promises
+  getForecast(baseURL, zipCode, countryCode, apiKey)
+    .then((data) => {
+      if (data.main !== undefined) {
+        data.main.currentTime = newDate;
+        data.main.userResponse = textAreaContent;
+      } else {
+        alert("Error, Please enter valid zip code!");
+      }
+
+      postData("/db", data);
+    })
+    .then(() => {
+      updateUI();
+    });
+});

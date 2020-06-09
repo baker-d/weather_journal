@@ -1,10 +1,10 @@
 /* Empyt JS object to act as endpoint for all routes */
-let projectData = {};
+let projectData = { data: [] };
 
 // Express to run server and routes
 const express = require("express");
 
-// Start up an instancec of app
+// Start up an instance of app
 const app = express();
 
 // Dependencies
@@ -42,13 +42,11 @@ app.post("/db", (req, res) => {
   const { temp, currentTime, userResponse } = req.body.main;
   const returnedTemp = `${temp} \u00B0 F`;
   const returnedCurrentDate = currentTime;
-  const returnedUserRespone = userResponse;
+  const returnedUserResponse = userResponse;
 
-  projectData.data.push({
-    temperature: returnedTemp,
-    currentDate: returnedCurrentDate,
-    userResponse: returnedUserRespone,
-  });
+  projectData.temperature = returnedTemp;
+  projectData.currentDate = returnedCurrentDate;
+  projectData.userResponse = returnedUserResponse;
 
   res.send(projectData);
 });
